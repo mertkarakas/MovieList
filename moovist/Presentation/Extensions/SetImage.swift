@@ -8,11 +8,22 @@
 import Foundation
 import UIKit
 
+private let cache = NSCache<NSString, NSData>()
+
 public extension UIImageView {
 	
 	@discardableResult
 	func setImage(from url: URL, contentMode mode: UIView.ContentMode = .scaleAspectFit) -> URLSessionDataTask? {
+		
 		contentMode = mode
+		
+		let cacheId = url.lastPathComponent as NSString
+		
+		if let cachedData = cache.object(forKey: cacheId) {
+			self.image = UIImage(data: cachedData as Data)
+			return nil
+		}
+		
 		let task = URLSession.shared.dataTask(with: url) { data, response, error in
 			guard
 				let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
@@ -20,6 +31,7 @@ public extension UIImageView {
 				let data = data, error == nil,
 				let image = UIImage(data: data)
 			else { return }
+			cache.setObject(data as NSData, forKey: cacheId)
 			DispatchQueue.main.async() { [weak self] in
 				self?.image = image
 			}
