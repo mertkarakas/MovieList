@@ -28,6 +28,7 @@ final class MovieViewController: BaseViewController {
 	private let movieCellIdentifier = "movieCell"
 	private let searchBarTopConstraintConstant: CGFloat = 8
 	private let animationDuration: Double = 0.2
+	private let layoutScaleForOffset: CGFloat = 2 / (GridFlowLayout().itemHeight / ListFlowLayout().itemHeight)
 	
 	// MARK: - Properties
 	
@@ -120,11 +121,31 @@ final class MovieViewController: BaseViewController {
 	}
 	
 	private func updateLayout() {
+		
 		let layout = self.isGridLayout ? GridFlowLayout() : ListFlowLayout()
+		
+		var collectionViewCurrentOffset = self.collectionView.contentOffset.y
+		
 		UIView.animate(withDuration: self.animationDuration) { () -> Void in
 			self.collectionView.reloadData()
 			self.collectionView.collectionViewLayout.invalidateLayout()
+			UIScreen.main.snapshotView(afterScreenUpdates: true)
 			self.collectionView.setCollectionViewLayout(layout, animated: true)
+		} completion: { [weak self] _ in
+			guard let self = self else { return }
+			
+			// Keep the collectionview offset on the same item when the layout change.
+			if collectionViewCurrentOffset == 0 {
+				return
+			}
+			let maxOffset = self.collectionView.contentSize.height - self.collectionView.bounds.height
+			if (collectionViewCurrentOffset / self.layoutScaleForOffset) > maxOffset {
+				collectionViewCurrentOffset = maxOffset
+				self.collectionView.setContentOffset(CGPoint(x: 0, y: collectionViewCurrentOffset), animated: true)
+			}
+			else {
+				self.collectionView.setContentOffset(CGPoint(x: 0, y: self.isGridLayout ? (collectionViewCurrentOffset / self.layoutScaleForOffset) : collectionViewCurrentOffset * self.layoutScaleForOffset), animated: true)
+			}
 		}
 	}
 	

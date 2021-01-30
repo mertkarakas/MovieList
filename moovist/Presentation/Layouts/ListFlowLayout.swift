@@ -12,7 +12,7 @@ class ListFlowLayout: UICollectionViewFlowLayout {
 	
 	// MARK: - Constants
 
-	let itemHeight: CGFloat = 250
+	let itemHeight: CGFloat = 200
 	
 	// MARK: - Initialize
 	
