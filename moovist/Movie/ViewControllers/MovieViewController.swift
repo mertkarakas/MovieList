@@ -87,19 +87,29 @@ final class MovieViewController: BaseViewController {
 		self.setSearchBarTopConstraint()
 	}
 	
+	private func showSearchBar() {
+		self.searchBarTopConstraint.constant = self.searchBarTopConstraintConstant
+		self.searchBar.alpha = 1.0
+		self.searchBar.becomeFirstResponder()
+	}
+	
+	private func hideSearchBar() {
+		if self.searchTextExists() {
+			self.searchBar.becomeFirstResponder()
+			return
+		}
+		self.searchBar.alpha = 0.0
+		self.searchBarTopConstraint.constant = -1 * self.searchBar.frame.height
+		self.view.endEditing(true)
+	}
+	
 	private func setSearchBarTopConstraint() {
 		
 		if self.searchBarTopConstraint.constant < 0 {
-			self.searchBarTopConstraint.constant = self.searchBarTopConstraintConstant
-			self.searchBar.becomeFirstResponder()
+			showSearchBar()
 		}
 		else {
-			if self.searchTextExists() {
-				self.searchBar.becomeFirstResponder()
-				return
-			}
-			self.searchBarTopConstraint.constant = -1 * self.searchBar.frame.height
-			self.view.endEditing(true)
+			hideSearchBar()
 		}
 	}
 	
@@ -309,7 +319,7 @@ extension MovieViewController: UIScrollViewDelegate {
 				return
 			}
 			UIView.animate(withDuration: self.animationDuration, delay: 0, options: .curveEaseOut) {
-				self.searchBarTopConstraint.constant = -1 * self.searchBar.frame.height
+				self.hideSearchBar()
 				self.view.layoutIfNeeded()
 			} completion: { [weak self] _ in
 				self?.view.endEditing(true)
@@ -318,7 +328,7 @@ extension MovieViewController: UIScrollViewDelegate {
 		else if currentOffset < 50 {
 			
 			UIView.animate(withDuration: self.animationDuration, delay: 0, options: .curveEaseIn) {
-				self.searchBarTopConstraint.constant = self.searchBarTopConstraintConstant
+				self.showSearchBar()
 				self.view.layoutIfNeeded()
 			}
 		}
