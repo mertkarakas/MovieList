@@ -42,6 +42,7 @@
 		E75C90A825C1E86D00BF9F61 /* MovieModelMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75C90A725C1E86C00BF9F61 /* MovieModelMapper.swift */; };
 		E75C90AF25C2057300BF9F61 /* MovieCollectionViewFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75C90AE25C2057300BF9F61 /* MovieCollectionViewFooterView.swift */; };
 		E75C90B325C207AE00BF9F61 /* MovieCollectionViewFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E75C90B225C207AE00BF9F61 /* MovieCollectionViewFooterView.xib */; };
+		E770648725C59EE100FE6735 /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E770648625C59EE100FE6735 /* UIApplicationExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -82,6 +83,7 @@
 		E75C90A725C1E86C00BF9F61 /* MovieModelMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieModelMapper.swift; sourceTree = "<group>"; };
 		E75C90AE25C2057300BF9F61 /* MovieCollectionViewFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCollectionViewFooterView.swift; sourceTree = "<group>"; };
 		E75C90B225C207AE00BF9F61 /* MovieCollectionViewFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieCollectionViewFooterView.xib; sourceTree = "<group>"; };
+		E770648625C59EE100FE6735 /* UIApplicationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -310,6 +312,7 @@
 			isa = PBXGroup;
 			children = (
 				E75C909E25C1D3EC00BF9F61 /* UserDefaultsExtension.swift */,
+				E770648625C59EE100FE6735 /* UIApplicationExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -419,6 +422,7 @@
 				E704781325C09DD500FA4F1D /* SceneDelegate.swift in Sources */,
 				E75C909A25C1C16A00BF9F61 /* MovieDetailViewDelegate.swift in Sources */,
 				E75C900425C14F6C00BF9F61 /* ServiceManager.swift in Sources */,
+				E770648725C59EE100FE6735 /* UIApplicationExtension.swift in Sources */,
 				E704784025C0A9F500FA4F1D /* MovieCollectionViewCell.swift in Sources */,
 				E75C909725C1C12B00BF9F61 /* MovieDetailViewModel.swift in Sources */,
 				E704782C25C09EF600FA4F1D /* MovieViewController.swift in Sources */,
