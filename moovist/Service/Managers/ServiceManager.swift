@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 final class ServiceManager {
 	
@@ -20,7 +21,17 @@ extension ServiceManager {
 	
 	func sendRequest<T: Codable>(request: BaseRequestModel, completion: @escaping(Swift.Result<T, ServiceErrorModel>) -> Void) {
 		
+		// Show Indicator
+		guard let baseViewController: BaseViewController = UIApplication.getTopViewController() as? BaseViewController else {
+			return
+		}
+		baseViewController.showLoading()
+		
 		URLSession.shared.dataTask(with: request.urlRequest()) { data, response, error in
+			// Hide indicator
+			DispatchQueue.main.async {
+				baseViewController.hideLoading()
+			}
 			guard let data = data, var responseModel = try? JSONDecoder().decode(BaseResponseModel<T>.self, from: data) else {
 				completion(Result.failure(ServiceErrorModel(ErrorMessagesConstants.mapModelError)))
 				return
@@ -33,7 +44,7 @@ extension ServiceManager {
 			} else {
 				completion(Result.failure(responseModel.error))
 			}
-		
+			
 		}.resume()
 	}
 }
